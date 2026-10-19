@@ -1,0 +1,2266 @@
+/* ==========================================================================
+   FERRARI F40 — THE SOVEREIGN UNVEILING
+   Design System: Officina Maranello & Valmora Atelier Aesthetics
+   ========================================================================== */
+
+:root {
+  /* Color Tokens */
+  --bg-dark: #050507;
+  --bg-deep: #08080c;
+  --bg-card: rgba(14, 14, 18, 0.75);
+  --bg-ivory: #F6F3ED;
+  --bg-ivory-card: #FFFFFF;
+
+  --ferrari-red: #E51A1A;
+  --scuderia-red: #FF2800;
+  --scuderia-crimson: #9B111E;
+  --ferrari-yellow: #FFE600;
+  --gold-accent: #D4AF37;
+  --gold-muted: rgba(212, 175, 55, 0.4);
+
+  --text-primary: #F7F7F8;
+  --text-secondary: #9E9EA8;
+  --text-tertiary: #5D5D68;
+  --text-ivory-primary: #121110;
+  --text-ivory-secondary: #5A5752;
+  --text-ivory-tertiary: #8C8880;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(212, 175, 55, 0.25);
+  --border-glow: rgba(255, 40, 0, 0.35);
+
+  /* Typography */
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Header & Transitions */
+  --header-height: 76px;
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-dark);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+body.loading {
+  overflow: hidden;
+}
+
+/* Signature Editorial Typography Utilities */
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Custom Luxury Cursor (Desktop)
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, input, select, .spec-row, .tab-item, .pill-btn, .reveal-knob {
+    cursor: none;
+  }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  background-color: var(--scuderia-red);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s var(--ease-cinematic), height 0.3s var(--ease-cinematic), border-color 0.3s ease, background 0.3s ease;
+}
+
+.cursor-text {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring.hover {
+  width: 54px;
+  height: 54px;
+  border-color: var(--scuderia-red);
+  background: rgba(255, 40, 0, 0.08);
+}
+
+.cursor-ring.drag {
+  width: 68px;
+  height: 68px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cursor-ring.drag .cursor-text {
+  opacity: 1;
+}
+
+/* Toast Message */
+.toast-message {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50px);
+  background: rgba(14, 14, 18, 0.95);
+  border: 1px solid var(--gold-accent);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding: 10px 24px;
+  border-radius: 30px;
+  z-index: 9000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s var(--ease-cinematic);
+}
+
+.toast-message.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   1. Luxury Loader
+   ========================================================================== */
+.loader-container {
+  position: fixed;
+  inset: 0;
+  background-color: #030305;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s var(--ease-cinematic), visibility 0.8s;
+}
+
+.loader-container.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  text-align: center;
+  max-width: 480px;
+  padding: 30px;
+}
+
+.loader-emblem {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 24px;
+}
+
+.prancing-horse-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.shield-pulse {
+  animation: dash 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes dash {
+  0% { stroke-dashoffset: 240; opacity: 0.3; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+.loader-brand .brand-sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.loader-brand .brand-title {
+  font-family: var(--font-sans);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.loader-brand .brand-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--scuderia-red);
+  margin-bottom: 30px;
+}
+
+.loader-progress-box {
+  width: 260px;
+  margin: 0 auto;
+}
+
+.loader-bar-bg {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.loader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--scuderia-crimson), var(--scuderia-red));
+  transition: width 0.15s ease-out;
+}
+
+.loader-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+}
+
+.loader-percent {
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   2. Fixed Site Header (Valmora Luxury Style)
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 4vw;
+  background: linear-gradient(to bottom, rgba(5, 5, 7, 0.85) 0%, rgba(5, 5, 7, 0.4) 70%, transparent 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.header-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.cavallino-icon {
+  display: flex;
+  align-items: center;
+  color: var(--scuderia-red);
+}
+
+.brand-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.brand-tagline {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.03em;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  padding-left: 18px;
+  display: inline-block;
+}
+
+@media (max-width: 991px) {
+  .brand-tagline {
+    display: none;
+  }
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (max-width: 860px) {
+  .header-nav {
+    display: none;
+  }
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--scuderia-red);
+  transition: width 0.3s var(--ease-cinematic);
+}
+
+.nav-link:hover {
+  color: #fff;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Audio Toggle Button */
+.audio-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.audio-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.audio-btn.active {
+  border-color: var(--scuderia-red);
+  color: #fff;
+  background: rgba(255, 40, 0, 0.12);
+}
+
+.audio-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.audio-wave i {
+  display: block;
+  width: 2px;
+  height: 3px;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: height 0.2s ease;
+}
+
+.audio-btn.active .audio-wave i:nth-child(1) { animation: wave 0.8s infinite ease-in-out; }
+.audio-btn.active .audio-wave i:nth-child(2) { animation: wave 0.8s 0.2s infinite ease-in-out; }
+.audio-btn.active .audio-wave i:nth-child(3) { animation: wave 0.8s 0.4s infinite ease-in-out; }
+.audio-btn.active .audio-wave i:nth-child(4) { animation: wave 0.8s 0.1s infinite ease-in-out; }
+
+@keyframes wave {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}
+
+
+/* Luxury Menu Trigger */
+.menu-btn {
+  background: transparent;
+  border: none;
+  width: 26px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3px 0;
+  transition: transform 0.3s ease;
+}
+
+.menu-btn span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: rgba(255, 255, 255, 0.85);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.menu-btn:hover span {
+  background-color: var(--scuderia-red);
+}
+
+/* Slide-out Atelier Drawer */
+.atelier-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  visibility: hidden;
+  transition: visibility 0.5s;
+}
+
+.atelier-drawer.open {
+  visibility: visible;
+}
+
+.drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.atelier-drawer.open .drawer-backdrop {
+  opacity: 1;
+}
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: #0B0B0E;
+  border-left: 1px solid var(--border-subtle);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-cinematic);
+}
+
+.atelier-drawer.open .drawer-panel {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 28px;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.drawer-close:hover {
+  color: var(--scuderia-red);
+}
+
+.drawer-title {
+  font-family: var(--font-sans);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-top: 30px;
+  margin-bottom: 12px;
+}
+
+.drawer-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.drawer-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.drawer-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.drawer-link span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--scuderia-red);
+}
+
+.drawer-link:hover {
+  color: var(--scuderia-red);
+  transform: translateX(6px);
+}
+
+.drawer-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-spec-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+}
+
+.drawer-contact {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gold-accent);
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   Fixed Canvas Container
+   ========================================================================== */
+.canvas-wrap {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+}
+
+#canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+.canvas-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 52%, transparent 40%, rgba(5, 5, 7, 0.45) 75%, rgba(5, 5, 7, 0.85) 100%);
+  pointer-events: none;
+}
+
+.canvas-glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70vw;
+  height: 25vh;
+  background: radial-gradient(ellipse at center bottom, rgba(255, 40, 0, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.dark-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #030305;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  transition: opacity 0.4s ease;
+}
+
+/* ==========================================================================
+   Hero Layer (Initial Unveil Screen - Valmora Style)
+   ========================================================================== */
+.hero-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-height) + 2vh) 4vw 4vh;
+  transition: opacity 0.5s ease;
+}
+
+.hero-headline-block {
+  pointer-events: auto;
+  max-width: 580px;
+}
+
+.hero-subtitle {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--scuderia-red);
+  margin-bottom: 12px;
+}
+
+.hero-main-title {
+  font-family: var(--font-sans);
+  font-size: clamp(42px, 6.5vw, 84px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.hero-main-title .line-1 {
+  display: block;
+  letter-spacing: 0.05em;
+}
+
+.hero-main-title .line-2 {
+  display: block;
+  letter-spacing: 0.02em;
+}
+
+.hero-main-title .serif-italic {
+  font-size: 1.15em;
+  font-weight: 400;
+  color: #fff;
+  margin-right: 6px;
+}
+
+/* Valmora Signature "DRAG TO REVEAL" Arc & Draggable Knob */
+.drag-reveal-wrap {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  height: 240px;
+  pointer-events: auto;
+  z-index: 60;
+}
+
+@media (max-width: 600px) {
+  .drag-reveal-wrap {
+    width: 320px;
+    height: 180px;
+    top: 52%;
+  }
+}
+
+.reveal-arc-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.reveal-knob {
+  position: absolute;
+  top: 190px;
+  left: 40px;
+  width: 38px;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  z-index: 70;
+}
+
+.reveal-knob:active {
+  cursor: grabbing;
+}
+
+.knob-dot {
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.9), 0 0 24px var(--scuderia-red);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.reveal-knob:hover .knob-dot {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.knob-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: pulseKnob 2s infinite ease-out;
+}
+
+@keyframes pulseKnob {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+.knob-label {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.hand-icon {
+  display: flex;
+  color: var(--scuderia-red);
+  animation: handNudge 1.6s infinite ease-in-out;
+}
+
+@keyframes handNudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+/* Center Bottom Narrative (Under Car) */
+.hero-bottom-narrative {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+.hero-narrative-text {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+/* Hero Footer Corners */
+.hero-footer-left {
+  position: absolute;
+  bottom: 4vh;
+  left: 4vw;
+  pointer-events: auto;
+}
+
+.share-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease;
+}
+
+.share-btn:hover {
+  color: #fff;
+}
+
+.hero-footer-right {
+  position: absolute;
+  bottom: 4vh;
+  right: 4vw;
+  pointer-events: auto;
+}
+
+.scroll-cue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-cue-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.scroll-cue-tick {
+  width: 24px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-cue-tick::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--scuderia-red);
+  transform: translateX(-100%);
+  animation: tickMove 2s infinite ease-in-out;
+}
+
+@keyframes tickMove {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ==========================================================================
+   Scroll Container & Sections
+   ========================================================================== */
+.scroll-container {
+  position: relative;
+  width: 100%;
+  height: 820vh; /* Generous pacing for all 5 sections */
+  z-index: 30;
+}
+
+.scroll-section {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5vw;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.scroll-section.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Section Common Category & Title */
+.section-category {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--gold-accent);
+  margin-bottom: 12px;
+}
+
+.section-category.dark-text {
+  color: var(--scuderia-crimson);
+}
+
+.section-display-title {
+  font-family: var(--font-sans);
+  font-size: clamp(28px, 3.8vw, 54px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  max-width: 680px;
+}
+
+/* ==========================================================================
+   Section 1: Reveal Watermark (15% - 28%)
+   ========================================================================== */
+.section-reveal {
+  padding: 0 6vw;
+}
+
+.reveal-inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.reveal-brand-wrap {
+  max-width: 440px;
+}
+
+.reveal-tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--scuderia-red);
+  margin-bottom: 8px;
+}
+
+.reveal-title {
+  font-family: var(--font-sans);
+  font-size: clamp(48px, 7vw, 92px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.reveal-chassis {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.reveal-watermark-wrap {
+  text-align: right;
+  position: relative;
+}
+
+.watermark-year {
+  font-family: var(--font-sans);
+  font-size: clamp(80px, 14vw, 190px);
+  font-weight: 900;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+  display: block;
+  letter-spacing: -0.04em;
+}
+
+.reveal-tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(18px, 2.2vw, 32px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 12px;
+}
+
+.reveal-tagline .serif-italic {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .reveal-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  .reveal-watermark-wrap {
+    text-align: left;
+  }
+}
+
+/* ==========================================================================
+   Section 2: Interactive Design Hotspots (Valmora Frame 13-16)
+   ========================================================================== */
+.section-design {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: calc(var(--header-height) + 2vh) 5vw 4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.design-header-block {
+  max-width: 580px;
+}
+
+.hotspot-item {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+.hotspot-item.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Pulsing Reticle on Vehicle */
+.hotspot-reticle {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.reticle-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 20px var(--scuderia-red);
+}
+
+.reticle-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: reticlePulse 2s infinite ease-out;
+}
+
+@keyframes reticlePulse {
+  0% { transform: translate(-50%, -50%) scale(0.7); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+.reticle-cross {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Diagonal Leader Line */
+.hotspot-leader-line {
+  position: absolute;
+  top: 48%;
+  left: 36%;
+  width: 25vw;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(212, 175, 55, 0.3));
+  transform-origin: left center;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+@media (max-width: 991px) {
+  .hotspot-leader-line {
+    display: none;
+  }
+}
+
+/* Hotspot Floating Detail Card (Valmora Frame 13-16 style) */
+.hotspot-card {
+  position: absolute;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;
+  max-width: 90vw;
+  pointer-events: auto;
+}
+
+.hotspot-card-inner {
+  background: rgba(14, 14, 18, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 8px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.hotspot-num-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.num-gold {
+  font-family: var(--font-sans);
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gold-accent);
+}
+
+.num-slash {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+}
+
+.hotspot-thumb-frame {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.hotspot-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-cinematic);
+}
+
+.hotspot-card:hover .hotspot-thumb-img {
+  transform: scale(1.05);
+}
+
+.thumb-glow {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  pointer-events: none;
+}
+
+.hotspot-title {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.hotspot-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Timeline Tabs (Valmora Frame 13-16 style) */
+.design-timeline-tabs {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  position: relative;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  width: fit-content;
+}
+
+.tab-item {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.3s ease;
+  padding: 4px 0;
+}
+
+.tab-item:hover, .tab-item.active {
+  color: #fff;
+}
+
+.tab-indicator-line {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background-color: var(--gold-accent);
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+/* ==========================================================================
+   Section 3: Interactive Tachometer & Specifications (Valmora Frame 18 & 20)
+   ========================================================================== */
+.section-specification {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: calc(var(--header-height) + 2vh) 5vw 4vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spec-layout {
+  width: 100%;
+  max-width: 1240px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .spec-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* Left: Authentic Veglia Borletti Tachometer Dial */
+.gauge-column {
+  display: flex;
+  justify-content: center;
+}
+
+.veglia-gauge-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Shift LED lights bar */
+.shift-lights-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shift-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.shift-led.green.on {
+  background: #00FF66;
+  box-shadow: 0 0 12px #00FF66;
+}
+
+.shift-led.yellow.on {
+  background: #FFE600;
+  box-shadow: 0 0 12px #FFE600;
+}
+
+.shift-led.amber.on {
+  background: #FF8800;
+  box-shadow: 0 0 12px #FF8800;
+}
+
+.shift-led.red.on {
+  background: #FF2800;
+  box-shadow: 0 0 16px #FF2800;
+}
+
+/* Circular Dial */
+.gauge-dial {
+  width: 380px;
+  height: 380px;
+  max-width: 75vw;
+  max-height: 75vw;
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 45%, #181820 0%, #08080C 75%, #030305 100%);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), inset 0 2px 6px rgba(255, 255, 255, 0.1);
+}
+
+.dial-bezel {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 4px solid #A88734;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.6) 0%, rgba(80, 60, 20, 0.8) 50%, rgba(212, 175, 55, 0.8) 100%);
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.dial-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.dial-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dial-num {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  fill: rgba(255, 255, 255, 0.8);
+  text-anchor: middle;
+}
+
+.dial-num.redline {
+  fill: var(--scuderia-red);
+}
+
+.dial-center-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.dial-metric-val {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: clamp(38px, 5vw, 54px);
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.dial-metric-unit {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--scuderia-red);
+  margin-top: 2px;
+}
+
+.dial-metric-sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.dial-needle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 130px;
+  transform-origin: center bottom;
+  z-index: 4;
+  margin-left: -2px;
+  margin-top: -130px;
+  transition: transform 0.6s var(--ease-spring);
+}
+
+.needle-pointer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, var(--scuderia-crimson), #FFFFFF);
+  border-radius: 2px 2px 0 0;
+  box-shadow: 0 0 8px rgba(255, 40, 0, 0.8);
+}
+
+.needle-cap {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, #333 40%, #111 100%);
+  border: 2px solid #A88734;
+  border-radius: 50%;
+}
+
+.dial-brand-stamp {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gauge-footer-readout {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.live-rpm-val {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: var(--gold-accent);
+}
+
+.live-rpm-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* Right: Specification List (Valmora Frame 20 style) */
+.specs-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-header {
+  margin-bottom: 24px;
+}
+
+.specs-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.spec-row::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background-color: var(--scuderia-red);
+  transition: width 0.35s var(--ease-cinematic);
+}
+
+.spec-row:hover::after, .spec-row.active::after {
+  width: 100%;
+}
+
+.spec-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.spec-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary);
+  transition: color 0.3s ease;
+}
+
+.spec-name {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+}
+
+.spec-row:hover .spec-name, .spec-row.active .spec-name {
+  color: #fff;
+}
+
+.spec-row:hover .spec-index, .spec-row.active .spec-index {
+  color: var(--scuderia-red);
+}
+
+.spec-right .spec-value {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.spec-row:hover .spec-value, .spec-row.active .spec-value {
+  color: var(--gold-accent);
+  transform: translateX(-4px);
+}
+
+.specs-footer-note {
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   Section 4: Editorial Transition Card (Valmora Frame 22)
+   ========================================================================== */
+.section-editorial {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5vw;
+}
+
+.editorial-card-container {
+  width: 100%;
+  max-width: 980px;
+}
+
+.editorial-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #0c0c10;
+}
+
+.editorial-image-frame {
+  width: 100%;
+  height: 480px;
+  max-height: 55vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorial-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.05) saturate(1.1);
+}
+
+.editorial-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 8, 12, 0.95) 0%, rgba(8, 8, 12, 0.4) 40%, transparent 100%);
+}
+
+.editorial-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 36px 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .editorial-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+  }
+}
+
+.editorial-stat-block {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.stat-giant {
+  font-family: var(--font-sans);
+  font-size: clamp(54px, 7vw, 84px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.stat-unit {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--scuderia-red);
+}
+
+.editorial-label-block {
+  max-width: 440px;
+}
+
+.editorial-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--gold-accent);
+  margin-bottom: 6px;
+}
+
+.editorial-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Section 5: Private Viewing Invitation (Warm Ivory Transition - Valmora Frame 25)
+   ========================================================================== */
+.section-viewing {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-ivory);
+  color: var(--text-ivory-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-height) + 3vh) 6vw 3vh;
+  z-index: 100;
+  transition: opacity 0.6s var(--ease-cinematic), transform 0.6s var(--ease-cinematic);
+}
+
+.viewing-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .viewing-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    overflow-y: auto;
+    max-height: 75vh;
+  }
+}
+
+/* Left Column */
+.viewing-left-col {
+  padding-right: 20px;
+}
+
+.viewing-title {
+  font-family: var(--font-sans);
+  font-size: clamp(34px, 4.5vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text-ivory-primary);
+  margin-bottom: 24px;
+}
+
+.viewing-title .serif-italic {
+  font-weight: 400;
+  color: var(--scuderia-crimson);
+}
+
+.viewing-description {
+  font-size: 15px;
+  color: var(--text-ivory-secondary);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 30px;
+}
+
+.viewing-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--text-ivory-tertiary);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+}
+
+/* Right Column: Minimalist Luxury Underline Form */
+.viewing-right-col {
+  background: transparent;
+}
+
+.bespoke-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 600px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--text-ivory-tertiary);
+}
+
+.underline-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(18, 17, 16, 0.2);
+  padding: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--text-ivory-primary);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.underline-input::placeholder {
+  color: rgba(18, 17, 16, 0.35);
+  font-weight: 300;
+}
+
+.underline-input:focus {
+  border-bottom-color: var(--scuderia-crimson);
+}
+
+/* Interest Pills (Valmora Frame 25 Style) */
+.interest-field {
+  gap: 12px;
+}
+
+.interest-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill-btn {
+  background: rgba(18, 17, 16, 0.05);
+  border: 1px solid rgba(18, 17, 16, 0.15);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-ivory-secondary);
+  transition: all 0.3s ease;
+}
+
+.pill-btn:hover {
+  border-color: rgba(18, 17, 16, 0.4);
+  color: var(--text-ivory-primary);
+}
+
+.pill-btn.active {
+  background: var(--text-ivory-primary);
+  border-color: var(--text-ivory-primary);
+  color: #FFFFFF;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.submit-invitation-btn {
+  background-color: var(--scuderia-crimson);
+  color: #FFFFFF;
+  border: none;
+  padding: 15px 32px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s var(--ease-cinematic);
+}
+
+.submit-invitation-btn:hover {
+  background-color: var(--scuderia-red);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(229, 26, 26, 0.3);
+}
+
+.btn-arrow {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.submit-invitation-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.curator-email {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--text-ivory-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.curator-email:hover {
+  color: var(--scuderia-crimson);
+}
+
+.form-feedback {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--scuderia-crimson);
+  min-height: 20px;
+}
+
+/* Atelier Footer */
+.atelier-footer {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(18, 17, 16, 0.1);
+  padding-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-ivory-tertiary);
+}
+
+@media (max-width: 768px) {
+  .atelier-footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+.back-to-top {
+  color: var(--scuderia-crimson);
+  text-decoration: none;
+  font-weight: 700;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top:hover {
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Comprehensive Multi-Device Responsiveness (Computers, Tablets, Phones)
+   ========================================================================== */
+
+/* Touch Device Normalization */
+@media (hover: none) or (pointer: coarse) {
+  body {
+    cursor: auto !important;
+  }
+  a, button, input, select, .spec-row, .tab-item, .pill-btn, .reveal-knob {
+    cursor: auto !important;
+  }
+  .cursor-dot, .cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Tablet Optimizations (768px - 1024px) */
+@media (max-width: 1024px) {
+  .site-header {
+    padding: 0 4vw;
+  }
+  .brand-tagline {
+    display: none;
+  }
+  .spec-layout {
+    gap: 40px;
+  }
+  .gauge-dial {
+    width: 320px;
+    height: 320px;
+  }
+  .hotspot-card {
+    width: 320px;
+  }
+}
+
+/* Mobile Devices (< 768px) */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
+
+  .site-header {
+    padding: 0 5vw;
+  }
+
+  .brand-name {
+    font-size: 14px;
+    letter-spacing: 0.16em;
+  }
+
+  /* Hero Section */
+  .hero-layer {
+    padding: calc(var(--header-height) + 16px) 5vw 30px;
+  }
+
+  .hero-main-title {
+    font-size: clamp(34px, 10vw, 48px);
+    line-height: 1.02;
+  }
+
+  .drag-reveal-wrap {
+    width: 300px;
+    height: 160px;
+    top: 50%;
+  }
+
+  .reveal-knob {
+    top: 130px;
+    left: 30px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .knob-label {
+    top: -28px;
+    font-size: 9px;
+  }
+
+  .hero-narrative-text {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 0 10px;
+  }
+
+  .hero-footer-left, .hero-footer-right {
+    bottom: 20px;
+  }
+
+  /* Hotspots */
+  .section-design {
+    padding: calc(var(--header-height) + 10px) 5vw 20px;
+    justify-content: flex-start;
+  }
+
+  .design-header-block {
+    margin-bottom: 14px;
+  }
+
+  .section-display-title {
+    font-size: clamp(20px, 5.5vw, 28px);
+  }
+
+  .hotspot-reticle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hotspot-card {
+    position: fixed;
+    top: auto;
+    bottom: 74px;
+    left: 4vw;
+    right: 4vw;
+    width: auto;
+    max-width: 100%;
+    transform: none;
+  }
+
+  .hotspot-card-inner {
+    padding: 14px 16px;
+  }
+
+  .hotspot-thumb-frame {
+    height: 110px;
+    margin-bottom: 10px;
+  }
+
+  .hotspot-num-badge {
+    margin-bottom: 8px;
+  }
+
+  .num-gold {
+    font-size: 28px;
+  }
+
+  .hotspot-title {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .hotspot-desc {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .design-timeline-tabs {
+    position: fixed;
+    bottom: 20px;
+    left: 5vw;
+    gap: 24px;
+    padding-bottom: 8px;
+    z-index: 100;
+  }
+
+  /* Tachometer & Specifications */
+  .section-specification {
+    padding: calc(var(--header-height) + 10px) 5vw 20px;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .spec-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 40px;
+    margin: auto 0;
+  }
+
+  .gauge-column {
+    order: 1;
+  }
+
+  .gauge-dial {
+    width: 230px;
+    height: 230px;
+  }
+
+  .dial-needle {
+    height: 80px;
+    margin-top: -80px;
+  }
+
+  .dial-metric-val {
+    font-size: 30px;
+  }
+
+  .dial-metric-unit {
+    font-size: 9px;
+  }
+
+  .dial-brand-stamp {
+    bottom: 35px;
+    font-size: 7px;
+  }
+
+  .specs-column {
+    order: 2;
+  }
+
+  .spec-header {
+    margin-bottom: 12px;
+  }
+
+  .spec-row {
+    padding: 10px 0;
+  }
+
+  .spec-name {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .spec-right .spec-value {
+    font-size: 14px;
+  }
+
+  /* Editorial Card */
+  .editorial-image-frame {
+    height: 320px;
+  }
+
+  .editorial-caption {
+    padding: 18px 20px;
+    gap: 12px;
+  }
+
+  .stat-giant {
+    font-size: 42px;
+  }
+
+  /* Private Viewing */
+  .section-viewing {
+    padding: calc(var(--header-height) + 16px) 5vw 20px;
+    overflow-y: auto;
+  }
+
+  .viewing-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .viewing-title {
+    font-size: clamp(26px, 7vw, 36px);
+    margin-bottom: 14px;
+  }
+
+  .viewing-description {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .bespoke-form {
+    gap: 20px;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .submit-invitation-btn {
+    justify-content: center;
+  }
+}

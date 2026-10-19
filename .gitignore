@@ -1,0 +1,17 @@
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+.vscode/
+.idea/
+
+# Inspiration reference recordings
+valmora.mp4
+
+# Node
+node_modules/
+.npm/
+
+# Vercel
+.vercel

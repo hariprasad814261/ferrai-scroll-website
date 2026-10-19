@@ -1,0 +1,19 @@
+{
+  "name": "ferrari-smooth-scroll-landing-page",
+  "version": "1.0.0",
+  "description": "Ferrari F40 Cinematic Smooth Scroll Landing Page with Lenis, GSAP, and Canvas Scrubber",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "serve": "npx -y serve . -l 8080"
+  },
+  "keywords": [
+    "ferrari",
+    "smooth-scroll",
+    "gsap",
+    "lenis",
+    "canvas",
+    "awwwards"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}

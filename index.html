@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FERRARI F40 — The Sovereign Unveiling | Maranello 1987</title>
+  <meta name="description" content="Experience the interactive unveiling of the Ferrari F40. Inspired by classic atelier elegance, featuring interactive drag reveal, precision design hotspots, analog Veglia Borletti tachometer telemetry, and private atelier viewing.">
+
+  <!-- Favicon / Shield Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path fill='%23FF2800' d='M6 2h20l-3 28H9z'/><polygon fill='%23FFE600' points='16,4 23,26 9,26'/><text x='16' y='22' font-size='14' text-anchor='middle' font-weight='bold' fill='%23000'>F</text></svg>">
+
+  <!-- Google Fonts: Outfit (modern luxury sans), Playfair Display (editorial italic serif), Space Mono (telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="loading">
+
+  <!-- Custom Luxury Cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring">
+    <span class="cursor-text" id="cursor-text"></span>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-message" id="toast-message">Dossier link copied to clipboard</div>
+
+  <!-- 1. Luxury Loader -->
+  <div id="loader" class="loader-container">
+    <div class="loader-content">
+      <div class="loader-emblem">
+        <svg class="prancing-horse-svg" viewBox="0 0 100 100" fill="currentColor">
+          <path d="M50 5 L88 22 L82 78 L50 95 L18 78 L12 22 Z" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+          <path d="M50 12 L82 26 L76 74 L50 88 L24 74 L18 26 Z" fill="none" stroke="#FF2800" stroke-width="1.5" stroke-dasharray="240" stroke-dashoffset="0" class="shield-pulse"/>
+          <path d="M52 28 C51 31 52 33 54 35 C53 37 50 39 48 38 C46 37 45 35 44 32 C43 30 40 31 38 33 C37 35 38 38 40 40 C42 42 43 45 42 48 C41 51 38 52 36 55 C34 58 35 62 38 64 C40 65 43 65 45 63 C46 62 47 64 48 67 C49 70 48 74 46 76 C45 77 47 78 49 77 C52 75 53 71 54 67 C55 64 57 63 60 64 C62 65 64 67 66 70 C67 71 69 70 69 68 C68 64 65 61 63 58 C62 55 63 52 65 50 C67 48 68 45 66 42 C64 39 60 38 58 35 C56 32 55 29 52 28 Z" fill="#FF2800"/>
+        </svg>
+      </div>
+      <div class="loader-brand">
+        <span class="brand-sub">OFFICINA MARANELLO // 1987</span>
+        <h1 class="brand-title">FERRARI F40</h1>
+        <span class="brand-code">CHASSIS TIPO F120 AB · TWIN-TURBO V8</span>
+      </div>
+      <div class="loader-progress-box">
+        <div class="loader-bar-bg">
+          <div id="loader-bar" class="loader-bar-fill"></div>
+        </div>
+        <div class="loader-meta">
+          <span class="loader-status" id="loader-status">WARMING TIPO F120 TURBOS...</span>
+          <span class="loader-percent" id="loader-percent">0%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Fixed Site Header (Exact Valmora Luxury Layout) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-block">
+        <a href="#hero" class="brand-logo" aria-label="Ferrari Home">
+          <span class="cavallino-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12 2L2 7l2 11 8 4 8-4 2-11-10-5zm0 2.2l7 3.5-1.5 8.3-5.5 2.8-5.5-2.8L5 7.7l7-3.5z"/>
+            </svg>
+          </span>
+          <span class="brand-name">FERRARI</span>
+        </a>
+        <span class="brand-tagline">The definitive analog hypercar built as if Enzo never departed</span>
+      </div>
+
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="#section-design" class="nav-link" data-target="section-design">DESIGN</a>
+        <a href="#section-specification" class="nav-link" data-target="section-specification">SPECIFICATION</a>
+        <a href="#section-editorial" class="nav-link" data-target="section-editorial">ATELIER</a>
+        <a href="#section-viewing" class="nav-link" data-target="section-viewing">PRIVATE VIEWING</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- V8 Sound Synthesizer Toggle -->
+        <button id="audio-toggle" class="audio-btn" aria-label="Toggle V8 Sound Synthesizer" title="Toggle Ferrari V8 Sound">
+          <span class="audio-wave">
+            <i></i><i></i><i></i><i></i>
+          </span>
+          <span class="audio-label">SOUND: OFF</span>
+        </button>
+
+
+        <!-- Minimalist Luxury Menu Trigger -->
+        <button id="menu-toggle" class="menu-btn" aria-label="Toggle Atelier Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide-out Atelier Drawer Menu -->
+  <div class="atelier-drawer" id="atelier-drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <span class="section-label">OFFICINA MARANELLO</span>
+        <button class="drawer-close" id="drawer-close">&times;</button>
+      </div>
+      <div class="drawer-content">
+        <h3 class="drawer-title">FERRARI F40</h3>
+        <p class="drawer-desc">
+          Approved personally by Enzo Ferrari on July 21, 1987. 
+          The first production supercar to break the 200 mph barrier, constructed of aeronautical Kevlar, carbon fiber, and pure analog conviction.
+        </p>
+        <ul class="drawer-nav">
+          <li><a href="#hero" class="drawer-link" data-target="hero"><span>01</span> THE UNVEILING</a></li>
+          <li><a href="#section-design" class="drawer-link" data-target="section-design"><span>02</span> DESIGN HOTSPOTS</a></li>
+          <li><a href="#section-specification" class="drawer-link" data-target="section-specification"><span>03</span> SPECIFICATIONS & TACHOMETER</a></li>
+          <li><a href="#section-editorial" class="drawer-link" data-target="section-editorial"><span>04</span> COMPOSITE ATELIER</a></li>
+          <li><a href="#section-viewing" class="drawer-link" data-target="section-viewing"><span>05</span> PRIVATE VIEWING INVITATION</a></li>
+        </ul>
+        <div class="drawer-footer">
+          <div class="drawer-spec-pill">CHASSIS: TIPO F120 AB</div>
+          <div class="drawer-spec-pill">TOTAL BUILT: 1,311</div>
+          <a href="mailto:classiche@ferrari.it" class="drawer-contact">CLASSICHE@FERRARI.IT</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixed Canvas Scrubber Viewport -->
+  <div class="canvas-wrap" id="canvas-wrap">
+    <canvas id="canvas"></canvas>
+    <!-- Cinematic Vignette & Studio Floor Lighting -->
+    <div class="canvas-vignette"></div>
+    <div class="canvas-glow"></div>
+  </div>
+
+  <!-- Fixed Dark Backdrop Overlay for High Contrast Sections -->
+  <div id="dark-overlay" class="dark-overlay"></div>
+
+  <!-- =========================================================================
+       HERO OVERLAY (Initial Unveil Screen - Standalone Valmora Aesthetic)
+       ========================================================================= -->
+  <section class="hero-layer" id="hero">
+    <!-- Top-left Brand & Headline -->
+    <div class="hero-headline-block">
+      <span class="hero-subtitle">OFFICINA MARANELLO // 1987</span>
+      <h1 class="hero-main-title">
+        <span class="line-1">REIGNITE</span>
+        <span class="line-2"><span class="serif-italic">the</span> LEGEND</span>
+      </h1>
+    </div>
+
+    <!-- Valmora Signature "DRAG TO REVEAL" Arc & Interactive Scrubber -->
+    <div class="drag-reveal-wrap" id="drag-reveal-wrap">
+      <svg class="reveal-arc-svg" viewBox="0 0 400 240" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="arcGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(255, 40, 0, 0.2)"/>
+            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.8)"/>
+            <stop offset="100%" stop-color="rgba(255, 40, 0, 0.9)"/>
+          </linearGradient>
+        </defs>
+        <!-- Background guide arc -->
+        <path class="arc-bg-path" d="M 40 200 A 220 220 0 0 1 360 200" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" stroke-dasharray="3 4"/>
+        <!-- Active progressive track -->
+        <path class="arc-active-path" id="arc-active-path" d="M 40 200 A 220 220 0 0 1 360 200" fill="none" stroke="url(#arcGlow)" stroke-width="2" stroke-dasharray="380" stroke-dashoffset="380"/>
+      </svg>
+
+      <!-- Draggable Knob Handle -->
+      <div class="reveal-knob" id="reveal-knob" role="slider" aria-label="Drag to unveil Ferrari F40" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div class="knob-dot"></div>
+        <div class="knob-pulse"></div>
+        <div class="knob-label">
+          <span class="hand-icon">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M13 1.07V9h1.5a1.5 1.5 0 0 1 1.5 1.5V13h.5a1.5 1.5 0 0 1 1.5 1.5v3a5.5 5.5 0 0 1-5.5 5.5h-2A5.5 5.5 0 0 1 5 17.5V11a1 1 0 0 1 1-1h1V4.5a1.5 1.5 0 0 1 3 0V9h1V1.07a1 1 0 0 1 2 0z"/>
+            </svg>
+          </span>
+          <span class="knob-text">DRAG TO REVEAL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Narrative Subtitle (Under Car) -->
+    <div class="hero-bottom-narrative">
+      <p class="hero-narrative-text">
+        A twin-turbocharged berlinetta that spent forty years defining pure speed — and remains exactly as Enzo intended.
+      </p>
+    </div>
+
+    <!-- Bottom Left: Share Button -->
+    <div class="hero-footer-left">
+      <button class="share-btn" id="share-btn">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        <span>Share</span>
+      </button>
+    </div>
+
+    <!-- Bottom Right: Scroll Indicator -->
+    <div class="hero-footer-right">
+      <div class="scroll-cue">
+        <span class="scroll-cue-text">SCROLL</span>
+        <div class="scroll-cue-tick"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SCROLL CONTAINER (Drives the Unveiling & Choreographed Sections)
+       ========================================================================= -->
+  <main id="scroll-container" class="scroll-container">
+
+    <!-- REVEAL WATERMARK SECTION (15% - 28%) -->
+    <section class="scroll-section section-reveal" id="section-reveal" data-enter="14" data-leave="28">
+      <div class="reveal-inner">
+        <div class="reveal-brand-wrap">
+          <span class="reveal-tag">VALMORA INSPIRATION · MARANELLO PROVENANCE</span>
+          <h2 class="reveal-title">FERRARI F40</h2>
+          <span class="reveal-chassis">TIPO F120 AB // CHASSIS N° 079888</span>
+        </div>
+
+        <div class="reveal-watermark-wrap">
+          <span class="watermark-year">1987</span>
+          <div class="reveal-tagline">
+            LOOKS <span class="serif-italic">fast</span> STANDING STILL.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE DESIGN HOTSPOTS (Exact Valmora Frame 13-16 Feature) (30% - 52%) -->
+    <section class="scroll-section section-design" id="section-design" data-enter="29" data-leave="52">
+      <div class="design-header-block">
+        <span class="section-category">DESIGN</span>
+        <h2 class="section-display-title">EVERY CONTOUR APPROVED BY IL COMMENDATORE.</h2>
+      </div>
+
+      <!-- Hotspot 1: Twin Pop-Up Headlamps -->
+      <div class="hotspot-item" id="hotspot-1" data-index="1">
+        <div class="hotspot-reticle" style="top: 48%; left: 32%;">
+          <div class="reticle-core"></div>
+          <div class="reticle-pulse"></div>
+          <svg class="reticle-cross" viewBox="0 0 30 30">
+            <line x1="15" y1="0" x2="15" y2="30" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+            <line x1="0" y1="15" x2="30" y2="15" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="hotspot-leader-line leader-to-right"></div>
+        <div class="hotspot-card card-right">
+          <div class="hotspot-card-inner">
+            <div class="hotspot-num-badge">
+              <span class="num-gold">01</span>
+              <span class="num-slash">/ 04</span>
+            </div>
+            <div class="hotspot-thumb-frame">
+              <img src="assets/hotspot_headlamps.webp" alt="Ferrari F40 Twin Pop-Up Headlamps" class="hotspot-thumb-img" loading="lazy">
+              <div class="thumb-glow"></div>
+            </div>
+            <h3 class="hotspot-title">TWIN POP-UP HEADLAMPS</h3>
+            <p class="hotspot-desc">
+              Aerodynamic pop-up assemblies paired with Lexan auxiliary driving lenses. 
+              Engineered to slice through night air at 324 km/h with analog conviction.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotspot 2: Speedline Modular Wheels -->
+      <div class="hotspot-item" id="hotspot-2" data-index="2">
+        <div class="hotspot-reticle" style="top: 66%; left: 45%;">
+          <div class="reticle-core"></div>
+          <div class="reticle-pulse"></div>
+          <svg class="reticle-cross" viewBox="0 0 30 30">
+            <line x1="15" y1="0" x2="15" y2="30" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+            <line x1="0" y1="15" x2="30" y2="15" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="hotspot-leader-line leader-to-right"></div>
+        <div class="hotspot-card card-right">
+          <div class="hotspot-card-inner">
+            <div class="hotspot-num-badge">
+              <span class="num-gold">02</span>
+              <span class="num-slash">/ 04</span>
+            </div>
+            <div class="hotspot-thumb-frame">
+              <img src="assets/hotspot_wheels.webp" alt="Speedline Modular Wheels" class="hotspot-thumb-img" loading="lazy">
+              <div class="thumb-glow"></div>
+            </div>
+            <h3 class="hotspot-title">SPEEDLINE MODULAR WHEELS</h3>
+            <p class="hotspot-desc">
+              Forged three-piece lightweight alloy wheels with racing centre-lock nuts. 
+              17-inch lightweight architecture shod in custom 335-section Pirelli P-Zero compound.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotspot 3: Kevlar & Carbon Cockpit -->
+      <div class="hotspot-item" id="hotspot-3" data-index="3">
+        <div class="hotspot-reticle" style="top: 42%; left: 52%;">
+          <div class="reticle-core"></div>
+          <div class="reticle-pulse"></div>
+          <svg class="reticle-cross" viewBox="0 0 30 30">
+            <line x1="15" y1="0" x2="15" y2="30" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+            <line x1="0" y1="15" x2="30" y2="15" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="hotspot-leader-line leader-to-right"></div>
+        <div class="hotspot-card card-right">
+          <div class="hotspot-card-inner">
+            <div class="hotspot-num-badge">
+              <span class="num-gold">03</span>
+              <span class="num-slash">/ 04</span>
+            </div>
+            <div class="hotspot-thumb-frame">
+              <img src="assets/hotspot_cockpit.webp" alt="Kevlar & Carbon Cockpit" class="hotspot-thumb-img" loading="lazy">
+              <div class="thumb-glow"></div>
+            </div>
+            <h3 class="hotspot-title">KEVLAR & NOMEX MONOCOQUE</h3>
+            <p class="hotspot-desc">
+              Eleven composite body panels crafted from aeronautical carbon and Kevlar. 
+              No carpets, no radio, pull-wire door releases. 1,100 kg dry weight with zero compromise.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotspot 4: Louvered Screen & Rear Wing -->
+      <div class="hotspot-item" id="hotspot-4" data-index="4">
+        <div class="hotspot-reticle" style="top: 36%; left: 68%;">
+          <div class="reticle-core"></div>
+          <div class="reticle-pulse"></div>
+          <svg class="reticle-cross" viewBox="0 0 30 30">
+            <line x1="15" y1="0" x2="15" y2="30" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+            <line x1="0" y1="15" x2="30" y2="15" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="hotspot-leader-line leader-to-right"></div>
+        <div class="hotspot-card card-right">
+          <div class="hotspot-card-inner">
+            <div class="hotspot-num-badge">
+              <span class="num-gold">04</span>
+              <span class="num-slash">/ 04</span>
+            </div>
+            <div class="hotspot-thumb-frame">
+              <img src="assets/hotspot_wing.webp" alt="Louvered Screen and Rear Wing" class="hotspot-thumb-img" loading="lazy">
+              <div class="thumb-glow"></div>
+            </div>
+            <h3 class="hotspot-title">LOUVERED SCREEN & REAR WING</h3>
+            <p class="hotspot-desc">
+              Sculpted fixed wing paired with a vented Lexan rear screen that showcases the twin-turbocharged 2.9L V8 while shedding heat under high boost.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Progress Tabs (Valmora Frame 13-16 style) -->
+      <div class="design-timeline-tabs">
+        <button class="tab-item active" data-tab="1">01</button>
+        <button class="tab-item" data-tab="2">02</button>
+        <button class="tab-item" data-tab="3">03</button>
+        <button class="tab-item" data-tab="4">04</button>
+        <div class="tab-indicator-line" id="tab-indicator-line"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE TACHOMETER & SPECIFICATIONS (Exact Valmora Frame 18 & 20) (54% - 73%) -->
+    <section class="scroll-section section-specification" id="section-specification" data-enter="53" data-leave="73">
+      <div class="spec-layout">
+        
+        <!-- Left: Authentic Ferrari Veglia Borletti Tachometer Dial -->
+        <div class="gauge-column">
+          <div class="veglia-gauge-wrapper">
+            
+            <!-- Shift LED Lights (Top of Tachometer) -->
+            <div class="shift-lights-bar">
+              <span class="shift-led green" id="led-1"></span>
+              <span class="shift-led yellow" id="led-2"></span>
+              <span class="shift-led yellow" id="led-3"></span>
+              <span class="shift-led amber" id="led-4"></span>
+              <span class="shift-led red" id="led-5"></span>
+            </div>
+
+            <!-- Gauge Dial Face -->
+            <div class="gauge-dial" id="gauge-dial">
+              <div class="dial-bezel"></div>
+              <div class="dial-face">
+                
+                <!-- SVG Tick Marks & Numbers -->
+                <svg class="dial-svg" viewBox="0 0 400 400">
+                  <!-- Redline zone arc (7,750 to 10,000 RPM) -->
+                  <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 40, 0, 0.4)" stroke-width="12" stroke-dasharray="140 800" stroke-dashoffset="-520"/>
+                  <!-- Yellow pre-warning arc -->
+                  <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 230, 0, 0.3)" stroke-width="6" stroke-dasharray="40 900" stroke-dashoffset="-480"/>
+
+                  <!-- Gauge Numerals -->
+                  <text x="100" y="315" class="dial-num">0</text>
+                  <text x="75" y="245" class="dial-num">1</text>
+                  <text x="80" y="165" class="dial-num">2</text>
+                  <text x="120" y="105" class="dial-num">3</text>
+                  <text x="185" y="75" class="dial-num">4</text>
+                  <text x="255" y="85" class="dial-num">5</text>
+                  <text x="310" y="135" class="dial-num">6</text>
+                  <text x="330" y="215" class="dial-num redline">7</text>
+                  <text x="310" y="295" class="dial-num redline">8</text>
+                  <text x="250" y="345" class="dial-num redline">9</text>
+                </svg>
+
+                <!-- Center Telemetry Display -->
+                <div class="dial-center-box">
+                  <span class="dial-metric-val" id="dial-metric-val">478</span>
+                  <span class="dial-metric-unit" id="dial-metric-unit">HP</span>
+                  <span class="dial-metric-sub" id="dial-metric-sub">TIPO F120 V8</span>
+                </div>
+
+                <!-- Animated Needle -->
+                <div class="dial-needle" id="dial-needle" style="transform: rotate(-120deg);">
+                  <div class="needle-pointer"></div>
+                  <div class="needle-cap"></div>
+                </div>
+
+                <!-- Dial Brand Stamp -->
+                <div class="dial-brand-stamp">
+                  <span>VEGLIA BORLETTI</span>
+                  <span>RPM x 1000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Bottom Readout -->
+            <div class="gauge-footer-readout">
+              <span class="live-rpm-val" id="live-rpm-val">7,000 RPM</span>
+              <span class="live-rpm-label">TEST BENCH TELEMETRY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Specification List (Valmora Frame 20 Layout) -->
+        <div class="specs-column">
+          <div class="spec-header">
+            <span class="section-category">SPECIFICATION</span>
+            <h2 class="section-display-title">NUMBERS FROM ANOTHER TIME.</h2>
+          </div>
+
+          <div class="specs-list" id="specs-list">
+            
+            <div class="spec-row active" data-rpm="7000" data-val="478" data-unit="HP" data-sub="PEAK POWER">
+              <div class="spec-left">
+                <span class="spec-index">01 ·</span>
+                <span class="spec-name">TWIN-TURBOCHARGED 2.9L V8</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">Tipo F120A</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-rpm="7750" data-val="478" data-unit="HP" data-sub="@ 7,000 RPM">
+              <div class="spec-left">
+                <span class="spec-index">02 ·</span>
+                <span class="spec-name">PEAK HORSEPOWER @ 7,000 RPM</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">478 hp</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-rpm="8200" data-val="3.8" data-unit="SEC" data-sub="0–100 KM/H">
+              <div class="spec-left">
+                <span class="spec-index">03 ·</span>
+                <span class="spec-name">0–100 KM/H (0–62 MPH)</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">3.8 s</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-rpm="8800" data-val="324" data-unit="KM/H" data-sub="TERMINAL VELOCITY">
+              <div class="spec-left">
+                <span class="spec-index">04 ·</span>
+                <span class="spec-name">CERTIFIED TERMINAL VELOCITY</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">324 km/h</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-rpm="5500" data-val="1100" data-unit="KG" data-sub="DRY WEIGHT">
+              <div class="spec-left">
+                <span class="spec-index">05 ·</span>
+                <span class="spec-name">HOMOLOGATED DRY WEIGHT</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">1,100 kg</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-rpm="4200" data-val="1311" data-unit="UNITS" data-sub="TOTAL BUILT">
+              <div class="spec-left">
+                <span class="spec-index">06 ·</span>
+                <span class="spec-name">TOTAL PRODUCTION RUN</span>
+              </div>
+              <div class="spec-right">
+                <span class="spec-value">1,311</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="specs-footer-note">
+            <span>OFFICIAL MARANELLO HOMOLOGATION SPECIFICATION — CERTIFIED ARCHIVE.</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: EDITORIAL TRANSITION CARD (Valmora Frame 22) (74% - 84%) -->
+    <section class="scroll-section section-editorial" id="section-editorial" data-enter="74" data-leave="84">
+      <div class="editorial-card-container">
+        <div class="editorial-card">
+          <div class="editorial-image-frame">
+            <img src="assets/f40_editorial.webp" alt="Ferrari F40 Atelier" class="editorial-img" loading="lazy">
+            <div class="editorial-overlay-gradient"></div>
+          </div>
+          <div class="editorial-caption">
+            <div class="editorial-stat-block">
+              <span class="stat-giant">1,100</span>
+              <span class="stat-unit">KG</span>
+            </div>
+            <div class="editorial-label-block">
+              <span class="editorial-label">RAW KEVLAR & SPEED</span>
+              <p class="editorial-desc">
+                Hand-formed carbon weave, zero electronic filters, and a twin-turbocharged battle cry approved by Il Commendatore.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRIVATE VIEWING INVITATION (Exact Valmora Frame 25 Warm Ivory Luxury Transition) (85% - 100%) -->
+    <section class="scroll-section section-viewing" id="section-viewing" data-enter="85" data-leave="100" data-persist="true">
+      <div class="viewing-container">
+        
+        <!-- Left Column: Editorial Invitation -->
+        <div class="viewing-left-col">
+          <span class="section-category dark-text">PRIVATE VIEWING</span>
+          <h2 class="viewing-title">
+            THE VEIL IS LIFTED<br>
+            <span class="serif-italic">only in Maranello.</span>
+          </h2>
+          <p class="viewing-description">
+            Private viewings, chassis provenance authentication, and archival dossier inspections are conducted at the Ferrari Classiche atelier in Maranello, strictly by appointment. 
+            Tell us who you are and our heritage curator will send an invitation.
+          </p>
+          <div class="viewing-meta">
+            <span>SCUDERIA FERRARI S.P.A.</span>
+            <span>VIA ABETONE INFERIORE 4, MARANELLO</span>
+          </div>
+        </div>
+
+        <!-- Right Column: Bespoke Atelier Form (Exact Valmora Frame 25 Layout) -->
+        <div class="viewing-right-col">
+          <form class="bespoke-form" id="viewing-form" onsubmit="event.preventDefault(); window.submitViewingForm();">
+            
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="client-name" class="field-label">NAME</label>
+                <input type="text" id="client-name" class="underline-input" required placeholder="Your name">
+              </div>
+              <div class="form-field">
+                <label for="client-email" class="field-label">EMAIL</label>
+                <input type="email" id="client-email" class="underline-input" required placeholder="you@domain.com">
+              </div>
+            </div>
+
+            <!-- Interest Pills (Valmora Frame 25 Style) -->
+            <div class="form-field interest-field">
+              <label class="field-label">INTEREST</label>
+              <div class="interest-pills" id="interest-pills">
+                <button type="button" class="pill-btn active" data-val="F40 Berlinetta (1987)">F40 Berlinetta</button>
+                <button type="button" class="pill-btn" data-val="F40 LM / Competizione">F40 LM / Competizione</button>
+                <button type="button" class="pill-btn" data-val="Private Viewing in Modena">Private Viewing</button>
+                <button type="button" class="pill-btn" data-val="Classiche Certification">Classiche Certification</button>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="client-notes" class="field-label">ANYTHING WE SHOULD KNOW</label>
+              <input type="text" id="client-notes" class="underline-input" placeholder="A preferred date, chassis serial, or collection history...">
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="submit-invitation-btn" id="btn-submit-invitation">
+                <span>REQUEST AN INVITATION</span>
+                <span class="btn-arrow">→</span>
+              </button>
+              <a href="mailto:classiche@ferrari.it" class="curator-email">CLASSICHE@FERRARI.IT</a>
+            </div>
+
+            <div class="form-feedback" id="form-feedback"></div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Atelier Page Footer -->
+      <footer class="atelier-footer">
+        <div class="footer-left">
+          <span>FERRARI CLASSICHE ATELIER // MODENA & MARANELLO</span>
+        </div>
+        <div class="footer-center">
+          <a href="#hero" class="back-to-top" id="back-to-top">REPLAY THE UNVEILING ↑</a>
+        </div>
+        <div class="footer-right">
+          <span>ALL RIGHTS RESERVED © 1987–2026 FERRARI S.P.A.</span>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- CDN Libraries: Lenis Smooth Scroll -> GSAP -> ScrollTrigger -> App Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
